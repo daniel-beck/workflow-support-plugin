@@ -42,7 +42,13 @@
 
         <j:forEach var="row" items="${it.rows}">
           <j:set var="node" value="${row.node}"/>
-          <tr style="opacity: ${row.isExecuted()?'1.0':'0.3'}"> <!-- Muted if not executed -->
+          <tr data-executed="${row.isExecuted()}"
+              data-active="${row.node.isActive()}"
+              data-running="${row.node.execution.isCurrentHead(row.node)}"
+              data-depth="${row.treeDepth}"
+              data-node-id="${node.id}"
+              data-duration-millis="${row.durationMillis}"
+              style="opacity: ${row.isExecuted()?'1.0':'0.3'}"> <!-- Muted if not executed -->
             <!-- tooltip is for now debugging only -->
             <j:set var="exec_state" value=""/>
             <j:if test="${!row.executed}"><j:set var="exec_state" value=" (${%not executed})"/></j:if>
